@@ -1,2 +1,33 @@
-<h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, rem?
-</h1>
+<html>
+  <body>
+    {% if name %}
+    <h1>Hello {{ name }}</h1>
+    {% else %}
+    <h1>Hello World</h1>
+    {% endif %}
+
+    <ul>
+      {% for product in products %}
+      <li>{{product.title}}</li>
+      {% endfor %}
+
+      {% for customer in customers %}
+      <li>{{customer.email}}</li>
+      {% endfor %}
+
+      {% for collection in collections %}
+      <li>{{collection.featured_product_id}}</li>
+      {% endfor %}
+
+      {% for orders in order %}
+      <li>{{orders.customer_id}}</li>
+      {% endfor %}
+
+      {% for orderItems in orderItem %}
+      <li>{{orderItems.product_id}}</li>
+      {% endfor %}
+      
+    </ul>
+
+  </body>
+</html>
