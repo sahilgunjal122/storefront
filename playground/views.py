@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.db.models import Q
 from store.models import Product
 from store.models import Customer
 from store.models import Collection
 from store.models import Order 
 from store.models import OrderItem
+
 
 # Create your views here.
 
@@ -71,7 +73,21 @@ def say_hello(request):
     # query_set=Order.objects.filter(customer__id=1)
 
     #Order items for products in collection 3 :
-    query_set=OrderItem.objects.filter(product__collection__id=3)
+    # query_set=OrderItem.objects.filter(product__collection__id=3)
+
+
+    #-------------Complex Lookups Using Q Objects------------
+
+    #Products: inventroy < 10 AND unit_price < 20
+    #Using two queries :
+    # query_set=Product.objects.filter(inventory__lt=10,unit_price__gt=20)
+    #Using Double Filter method :
+    # query_set=Product.objects.filter(inventory__lt=10).filter(unit_price__gt=20)
+    
+    #Products : inventory < 10 OR unit_price < 20
+    #Using Q Objects :
+    #query_set=Product.objects.filter(Q(inventory__lt=10) | Q(unit_price__lt=20))
+    query_set=Product.objects.filter(Q(inventory__lt=10) | ~Q(unit_price__lt=20))
 
 
 
@@ -83,10 +99,11 @@ def say_hello(request):
 
 
 
-    # return render(request,'hello.html',{'name':'Sahil','products':list(query_set)})
+
+    return render(request,'hello.html',{'name':'Sahil','products':list(query_set)})
     # return render(request,'hello.html',{'name':'Sahil','customers':list(query_set)})
     # return render(request,'hello.html',{'name':'Sahil','collections':list(query_set)})
     # return render(request,'hello.html',{'name':'Sahil','order':list(query_set)})
-    return render(request,'hello.html',{'name':'Sahil','orderItem':list(query_set)})
+    # return render(request,'hello.html',{'name':'Sahil','orderItem':list(query_set)})
     
     
