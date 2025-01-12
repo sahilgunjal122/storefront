@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
-from django.db.models import Q
+from django.db.models import Q,F
 from store.models import Product
 from store.models import Customer
 from store.models import Collection
@@ -87,7 +87,14 @@ def say_hello(request):
     #Products : inventory < 10 OR unit_price < 20
     #Using Q Objects :
     #query_set=Product.objects.filter(Q(inventory__lt=10) | Q(unit_price__lt=20))
-    query_set=Product.objects.filter(Q(inventory__lt=10) | ~Q(unit_price__lt=20))
+    # query_set=Product.objects.filter(Q(inventory__lt=10) | ~Q(unit_price__lt=20))
+
+
+
+    #-------------Referencing Fileds using F Objects----------
+    #Products : inventory = unit_price
+    query_set=Product.objects.filter(inventory=F('collection_id'))
+
 
 
 
