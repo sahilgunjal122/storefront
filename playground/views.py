@@ -131,7 +131,19 @@ def say_hello(request):
 
 
     # Question :Select products that have been ordered and sort them by title 
-    query_set=Product.objects.filter(id__in=OrderItem.objects.values('product__id').distinct()).order_by('title')
+    # query_set=Product.objects.filter(id__in=OrderItem.objects.values('product__id').distinct()).order_by('title')
+
+
+
+    #-----------Defering Fileds--------------
+
+    #only Method : ( Specify the fields read from database.Here we get instance while in values we get dictionry)
+    # query_set=Product.objects.only('id','title')
+
+    #defer method : ( It will except the filed mentioned )
+    query_set=Product.objects.defer('description')
+
+
 
 
 
