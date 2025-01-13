@@ -119,7 +119,21 @@ def say_hello(request):
     #-------------Limiting Results-------------
     #To Limit the Results the slicing will be done
     #So the Result will be 0, 1, 2, 3, 4
-    query_set=Product.objects.all()[0:5]
+    # query_set=Product.objects.all()[0:5]
+
+
+    #------------Selecting Fileds to Query------------
+    #Values Method : ( It Gives the Values as mentioned )
+    # query_set=Product.objects.values('id','title','collection__title')
+
+    #values_list : ( The Values will be in the Tuple )
+    # query_set=Product.objects.values_list('id','title','collection__title')
+
+
+    # Question :Select products that have been ordered and sort them by title 
+    query_set=Product.objects.filter(id__in=OrderItem.objects.values('product__id').distinct()).order_by('title')
+
+
 
 
 
