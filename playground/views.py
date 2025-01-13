@@ -93,7 +93,7 @@ def say_hello(request):
 
     #-------------Referencing Fileds using F Objects----------
     #Products : inventory = unit_price
-    query_set=Product.objects.filter(inventory=F('collection_id'))
+    # query_set=Product.objects.filter(inventory=F('collection_id'))
 
 
 
@@ -114,19 +114,12 @@ def say_hello(request):
     # query_set=Product.objects.earliest('unit_price')
     # query_set=Product.objects.latest('unit_price')
 
-    
 
 
-    
-
-
-
-
-
-
-
-
-
+    #-------------Limiting Results-------------
+    #To Limit the Results the slicing will be done
+    #So the Result will be 0, 1, 2, 3, 4
+    query_set=Product.objects.all()[0:5]
 
 
 
