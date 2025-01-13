@@ -98,6 +98,33 @@ def say_hello(request):
 
 
 
+    #------------Sorting--------------
+    #The Products are sorted by titile in Acending Order
+    # query_set=Product.objects.order_by('title')
+
+    #To define decending order minus(-) sign is used
+    # query_set=Product.objects.order_by('unit_price','-title').reverse()
+
+    #Using Filter method :
+    # query_set=Product.objects.filter(collection__id=1).order_by('unit_price')
+
+
+    #Use of Earliest Method :(does not return query set so give error have to change in the html)
+    # query_set=Product.objects.order_by('unit_price')[0]
+    # query_set=Product.objects.earliest('unit_price')
+    # query_set=Product.objects.latest('unit_price')
+
+    
+
+
+    
+
+
+
+
+
+
+
 
 
 
