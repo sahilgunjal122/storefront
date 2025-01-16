@@ -2,11 +2,7 @@ from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.db.models import Q,F
-from store.models import Product
-from store.models import Customer
-from store.models import Collection
-from store.models import Order 
-from store.models import OrderItem
+from store.models import Product, Customer, Collection, Order, OrderItem
 
 
 # Create your views here.
@@ -141,16 +137,20 @@ def say_hello(request):
     # query_set=Product.objects.only('id','title')
 
     #defer method : ( It will except the filed mentioned )
-    query_set=Product.objects.defer('description')
+    # query_set=Product.objects.defer('description')
 
 
 
+    #----------Selecting Related Objects------------
+    #When we pre-load objects together Here we are collecting product and collection
+     
+    #select_related(1) method :
+    #query_set=Product.objects.all() ----here the dajngo will run multiple query which take more time
+    # query_set=Product.objects.select_related('collection').all()
 
-
-
-
-
-
+    #prefetch_related(n) : 
+    query_set=Product.objects.prefetch_related('promotions').select_related('collection').all()
+ 
 
 
     return render(request,'hello.html',{'name':'Sahil','products':list(query_set)})
