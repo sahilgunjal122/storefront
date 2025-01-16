@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.db.models import Q,F
+from django.db.models.aggregates import Count,Max,Min,Avg,Sum
 from store.models import Product, Customer, Collection, Order, OrderItem
 
 
@@ -149,11 +150,40 @@ def say_hello(request):
     # query_set=Product.objects.select_related('collection').all()
 
     #prefetch_related(n) : 
-    query_set=Product.objects.prefetch_related('promotions').select_related('collection').all()
+    # query_set=Product.objects.prefetch_related('promotions').select_related('collection').all()
+
+
+    #-----------Aggregating Objects----------
+    #To count the total no, of products using id
+    # result=Product.objects.filter(collection__id=2).aggregate(count=Count('id'),min_price=Min('unit_price'))
+
+
+
+    #-----------Aggregating Excersise--------
+    #How many orders do we have? :
+    # result=Order.objects.aggregate(orders=Count('id'))
+
+    #How many units of product 1 have we sold :
+    # result=OrderItem.objects.filter(product__id=1).aggregate(units_sold=Sum('quantity'))
+
+    #How many orders has customer 1 placed :
+    # result=Order.objects.filter(customer__id=1).aggregate(cust_1_oreders=Count('id'))
+
+    #What is the min, max and average unit price of the products in collection 3 :
+    result=Product.objects.filter(collection__id=3).aggregate(
+        Min_Price=Min('unit_price'),
+        Max_Price=Max('unit_price'),
+        Avg_Price=Avg('unit_price')
+
+        )
+
+
+
+
  
 
 
-    return render(request,'hello.html',{'name':'Sahil','products':list(query_set)})
+    return render(request,'hello.html',{'name':'Sahil','result':result})
     # return render(request,'hello.html',{'name':'Sahil','customers':list(query_set)})
     # return render(request,'hello.html',{'name':'Sahil','collections':list(query_set)})
     # return render(request,'hello.html',{'name':'Sahil','order':list(query_set)})
