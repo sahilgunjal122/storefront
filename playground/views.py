@@ -214,7 +214,19 @@ def say_hello(request):
 
 
     #Another way :
-    Collection.objects.filter(id__gt=10).delete()
+    # Collection.objects.filter(id__gt=10).delete()
+
+
+    #-------------Transactions------------------
+
+
+
+    #-------------Executing Raw SQL Query--------
+    #The Raw method allows to execute the Sql queries
+    #This queryset is Different from others.It is not prefered to use this
+    # queryset=Product.objects.raw('SELECT * FROM store_product')
+
+
 
 
 
