@@ -204,7 +204,17 @@ def say_hello(request):
     # Collection.objects.update(featured_product=None)
 
     #Now to update the specific value use Filter
-    Collection.objects.filter(pk=12).update(featured_product=None)
+    # Collection.objects.filter(pk=12).update(featured_product=None)
+
+
+    #-------------Deleting Objects------------
+
+    # collection=Collection(pk=14)
+    # collection.delete()
+
+
+    #Another way :
+    Collection.objects.filter(id__gt=10).delete()
 
 
 
