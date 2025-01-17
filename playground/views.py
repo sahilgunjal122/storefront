@@ -176,6 +176,21 @@ def say_hello(request):
         Avg_Price=Avg('unit_price')
 
         )
+    
+    #The 15-Annotating Objects to 21-Understanding queryset Cache is Skiped
+
+
+
+    #-------------Creating Objects-------------
+    #We have to create new collection & save it to database.
+    collection=Collection()
+    collection.title='Video Games'
+    collection.featured_product=Product(pk=1)
+    collection.save()
+
+
+    #Another way by Using create method in which we give keyword agruments
+    Collection.objects.create(title='a',featured_product_id=1)
 
 
 
