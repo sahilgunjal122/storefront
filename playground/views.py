@@ -183,14 +183,29 @@ def say_hello(request):
 
     #-------------Creating Objects-------------
     #We have to create new collection & save it to database.
-    collection=Collection()
-    collection.title='Video Games'
-    collection.featured_product=Product(pk=1)
-    collection.save()
+    # collection=Collection()
+    # collection.title='Video Games'
+    # collection.featured_product=Product(pk=1)
+    # collection.save()
 
 
     #Another way by Using create method in which we give keyword agruments
-    Collection.objects.create(title='a',featured_product_id=1)
+    # Collection.objects.create(title='a',featured_product_id=1)
+
+
+    #------------Updating Objects--------------
+    #To Update the perticular values in Database
+    # collection=Collection(pk=13)
+    # collection.title='Clothing'
+    # collection.featured_product=Product(pk=1)
+    # collection.save()
+
+    #Using Update Method : ( this will make all the featured_product to Null )
+    # Collection.objects.update(featured_product=None)
+
+    #Now to update the specific value use Filter
+    Collection.objects.filter(pk=12).update(featured_product=None)
+
 
 
 
