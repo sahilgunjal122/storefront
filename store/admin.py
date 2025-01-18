@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models.aggregates import Count,Max,Min,Avg,Sum
 from .import models
 # Register your models here.
 
@@ -32,6 +33,16 @@ class OrderAdmin(admin.ModelAdmin):
     list_select_related=['customer']
 
 
+@admin.register(models.Collection)
+class CollectionAdmin(admin.ModelAdmin):
+    list_display=['title','product_count']
 
-
-admin.site.register(models.Collection)
+    @admin.display(ordering='product_count')
+    def product_count(self,collection):
+        return collection.product_count
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            product_count=Count('product')
+            
+        )
